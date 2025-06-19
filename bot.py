@@ -2,9 +2,18 @@ import requests
 from datetime import datetime
 import smtplib
 from email.message import EmailMessage
+import os
+from dotenv import load_dotenv
 
-from config import EMAIL_SENDER, EMAIL_RECEIVERS, EMAIL_PASSWORD, SMTP_PASSWORD, YOUR_CITY, MAX_PRICE
+load_dotenv()
 
+EMAIL_SENDER = os.getenv("EMAIL_SENDER")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+EMAIL_RECEIVERS = os.getenv("EMAIL_RECEIVERS")
+EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
+SMTP_PASSWORD =os.getenv("SMTP_PASSWORD")
+YOUR_CITY = os.getenv("YOUR_CITY")
+MAX_PRICE = int(os.getenv("MAX_PRICE"))
 
 def get_flights_from_city():
     url = "https://www.ryanair.com/api/farfnd/3/oneWayFares"
@@ -18,7 +27,6 @@ def get_flights_from_city():
     }
     response = requests.get(url, params=params)
     data = response.json()
-    #print("LOTY Z WRO")
 
     flights = []
     for fare in data.get("fares", []):
@@ -108,7 +116,8 @@ def send_email(body):
     msg = EmailMessage()
     msg["Subject"] = "✈️ Tanie loty "
     msg["From"] = EMAIL_SENDER
-    msg["To"] = EMAIL_RECEIVERS
+    msg["To"] = EMAIL_RECEIVER
+    msg["Bcc"] = EMAIL_RECEIVERS
     msg.set_content(body)
     print(body)
 
