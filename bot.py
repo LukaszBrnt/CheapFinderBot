@@ -122,6 +122,7 @@ def send_email(body):
     print(body)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+       print(EMAIL_SENDER +  " + "  + SMTP_PASSWORD)
        smtp.login(EMAIL_SENDER, SMTP_PASSWORD)
        smtp.send_message(msg)
     print("📧 Wysłano e-mail!")
