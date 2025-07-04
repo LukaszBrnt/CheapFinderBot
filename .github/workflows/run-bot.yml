@@ -26,7 +26,7 @@ jobs:
     - name: Run bot
       env:
         EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
         SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
         SMTP_PORT: ${{ secrets.SMTP_PORT }}

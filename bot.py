@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_RECEIVERS = os.getenv("EMAIL_RECEIVERS")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
 SMTP_PASSWORD =os.getenv("SMTP_PASSWORD")
@@ -122,9 +121,6 @@ def send_email(body):
     print(body)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-       print("DEBUG:")
-       print(EMAIL_SENDER)
-       print(SMTP_PASSWORD)
        smtp.login(EMAIL_SENDER, SMTP_PASSWORD)
        smtp.send_message(msg)
     print("📧 Wysłano e-mail!")
