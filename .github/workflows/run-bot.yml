@@ -33,4 +33,4 @@ jobs:
         MAX_PRICE: ${{ secrets.MAX_PRICE }}
         YOUR_CITY: ${{ secrets.YOUR_CITY }}
       run: |
-        python bot.py
+        python MainRunner.py
