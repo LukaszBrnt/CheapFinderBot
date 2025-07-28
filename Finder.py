@@ -1,16 +1,11 @@
 import requests
 from datetime import datetime
-import smtplib
-from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
+import Sender
 
 load_dotenv()
 
-EMAIL_SENDER = os.getenv("EMAIL_SENDER")
-EMAIL_RECEIVERS = os.getenv("EMAIL_RECEIVERS")
-EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
-SMTP_PASSWORD =os.getenv("SMTP_PASSWORD")
 YOUR_CITY = os.getenv("YOUR_CITY")
 MAX_PRICE = int(os.getenv("MAX_PRICE"))
 
@@ -111,21 +106,7 @@ def pair_round_trips(flights_from, flights_to):
                     })
     return sorted(results, key=lambda x: x["total_price"])
 
-def send_email(body):
-    msg = EmailMessage()
-    msg["Subject"] = "✈️ Tanie loty "
-    msg["From"] = EMAIL_SENDER
-    msg["To"] = EMAIL_RECEIVER
-    msg["Bcc"] = EMAIL_RECEIVERS
-    msg.set_content(body)
-    print(body)
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-       smtp.login(EMAIL_SENDER, SMTP_PASSWORD)
-       smtp.send_message(msg)
-    print("📧 Wysłano e-mail!")
-
-def main():
+def start():
     flights_from = get_flights_from_city()
     print(flights_from)
 
@@ -145,10 +126,6 @@ def main():
             for r in flights_from
         ]
         message = f"Loty poniżej {MAX_PRICE} zł:\n\n" + "\n".join(lines_from) + f"\n\n🌀 Loty w obie strony do {MAX_PRICE} zł z przerwą ≤ 7 dni:\n\n" + "\n".join(lines)
-        #print(message)
-        send_email(message)
+        Sender.send_email(message)
     else:
         print("😞 Brak pasujących lotów.")
-
-if __name__ == "__main__":
-    main()
