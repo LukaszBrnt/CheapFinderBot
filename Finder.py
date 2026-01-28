@@ -125,7 +125,12 @@ def start():
             f"{r['price']} zł"
             for r in flights_from
         ]
-        message = f"Loty poniżej {MAX_PRICE} zł:\n\n" + "\n".join(lines_from) + f"\n\n🌀 Loty w obie strony do {MAX_PRICE} zł z przerwą ≤ 7 dni:\n\n" + "\n".join(lines)
+        lines_to = [
+            f"{r['from_name']} → ({YOUR_CITY}): {r['date']}, "
+            f"{r['price']} zł"
+            for r in flights_to
+        ]
+        message = f"Loty poniżej {MAX_PRICE} zł z {YOUR_CITY}:\n\n" + "\n".join(lines_from) + f"\n\n🌀 Loty poniżej {MAX_PRICE} zł do {YOUR_CITY}:\n\n" + "\n".join(lines_to) + f"\n\n🌀 Loty w obie strony do {MAX_PRICE} zł z przerwą ≤ 7 dni:\n\n" + "\n".join(lines)
         Sender.send_email(message)
     else:
         lines_from = [
@@ -134,7 +139,7 @@ def start():
             for r in flights_from
         ]
         lines_to = [
-            f"{r['to_name']} → ({YOUR_CITY}): {r['date']}, "
+            f"{r['from_name']} → ({YOUR_CITY}): {r['date']}, "
             f"{r['price']} zł"
             for r in flights_to
         ]
