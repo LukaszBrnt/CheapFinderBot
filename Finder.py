@@ -16,7 +16,7 @@ def get_flights_from_city():
         "language": "pl",
         "market": "pl-pl",
         "outboundDepartureDateFrom": datetime.today().strftime('%Y-%m-%d'),
-        "outboundDepartureDateTo": "2025-12-31",
+        "outboundDepartureDateTo": "2026-12-31",
         "currency": "PLN"
     }
     response = requests.get(url, params=params)
@@ -57,7 +57,7 @@ def get_flights_to_city():
             "language": "pl",
             "market": "pl-pl",
             "outboundDepartureDateFrom": datetime.today().strftime('%Y-%m-%d'),
-            "outboundDepartureDateTo": "2025-12-31",
+            "outboundDepartureDateTo": "2026-12-31",
             "currency": "PLN"
         }
 
