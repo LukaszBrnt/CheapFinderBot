@@ -128,4 +128,16 @@ def start():
         message = f"Loty poniżej {MAX_PRICE} zł:\n\n" + "\n".join(lines_from) + f"\n\n🌀 Loty w obie strony do {MAX_PRICE} zł z przerwą ≤ 7 dni:\n\n" + "\n".join(lines)
         Sender.send_email(message)
     else:
-        print("😞 Brak pasujących lotów.")
+        lines_from = [
+            f"{YOUR_CITY} → ({r['to_name']}): {r['date']}, "
+            f"{r['price']} zł"
+            for r in flights_from
+        ]
+        lines_to = [
+            f"{r['to_name']} → ({YOUR_CITY}): {r['date']}, "
+            f"{r['price']} zł"
+            for r in flights_to
+        ]
+        message = f"Loty poniżej {MAX_PRICE} zł z {YOUR_CITY}:\n\n" + "\n".join(lines_from) + f"\n\n🌀 Loty poniżej {MAX_PRICE} zł do {YOUR_CITY}:\n\n" + "\n".join(lines_to)
+        Sender.send_email(message)
+        print("😞 Brak pasujących lotów w obie strony.")
